@@ -1,0 +1,50 @@
+# global
+
+option(
+  'lto',
+  type: 'combo',
+  choices: ['true', 'false', 'auto'],
+  value: 'auto',
+  description: 'Control link time optimizations. The "auto" options enables LTO on x86_64 and aarch64 only. Other platforms often do not provide enough memory.',
+)
+
+option(
+  'profile',
+  type: 'combo',
+  choices: ['release', 'dev'],
+  value: 'release',
+)
+
+# libp2panda
+
+option(
+  'libp2panda',
+  type: 'boolean',
+  description: 'Build libp2panda C bindings for the p2panda crate',
+)
+
+option(
+  'introspection',
+  type: 'boolean',
+  description: 'Generate .gir and .typelib files',
+)
+
+option(
+  'vapi',
+  type: 'boolean',
+  description: 'Generate .vapi files for the Vala language',
+)
+
+option(
+  'capi_docs',
+  type: 'boolean',
+  value: false,
+  description: 'Generate HTML documentation for C API',
+)
+
+option(
+  'python_tests',
+  type: 'boolean',
+  value: false,
+  description: 'Test python bindings. Needs python3-gi',
+)

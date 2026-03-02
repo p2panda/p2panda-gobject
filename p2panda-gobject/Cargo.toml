@@ -1,0 +1,12 @@
+[package]
+name = "p2panda-gobject"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+glib.workspace = true
+tokio = "1.49.0"
+p2panda = { path = "../../p2panda/p2panda" }
+tokio-stream = "0.1.18"
+rand = "0.10.0"
+gio.workspace = true

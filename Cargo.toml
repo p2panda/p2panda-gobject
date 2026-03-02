@@ -1,0 +1,26 @@
+[workspace.package]
+version = "0.0.1"
+authors = ["Julian Sparber"]
+description = "GObject Bindings for p2panda"
+license = "MPL-2.0 OR LGPL-2.1-or-later"
+homepage = "https://github.com/p2panda/p2panda-gobject"
+repository = "https://github.com/p2panda/p2panda-gobject"
+edition = "2024"
+rust-version = "1.92"
+
+[profile.release]
+lto = true
+codegen-units = 1
+
+[workspace]
+resolver = "3"
+members = [
+    "p2panda-gobject",
+    "libp2panda",
+]
+
+[workspace.dependencies]
+p2panda-gobject = { path = "p2panda-gobject/" }
+glib = { version = "0.22", features = ["v2_80"] }
+gio = { version = "0.22" }
+

@@ -1,0 +1,18 @@
+[package]
+name = "libp2panda"
+publish = false
+version = "0.1.0"
+edition = "2024"
+
+[lints.clippy]
+missing_safety_doc = "allow"
+
+[dependencies]
+glib.workspace = true
+gio.workspace = true
+p2panda-gobject.workspace = true
+futures = "0.3.32"
+
+[lib]
+name = "p2panda"
+crate-type = ["cdylib"]
