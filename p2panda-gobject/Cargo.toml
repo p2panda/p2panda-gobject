@@ -6,7 +6,7 @@ edition = "2024"
 [dependencies]
 glib.workspace = true
 tokio = "1.49.0"
-p2panda = { path = "../../p2panda/p2panda" }
+p2panda = { git = "https://github.com/p2panda/p2panda.git", rev = "b1d1f8edb152138d07efc12adffac667131ed7f7" }
 tokio-stream = "0.1.18"
 rand = "0.10.0"
 gio.workspace = true

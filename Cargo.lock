@@ -2698,7 +2698,8 @@ checksum = "7c87def4c32ab89d880effc9e097653c8da5d6ef28e6b539d313baaacfbafcbe"
 
 [[package]]
 name = "p2panda"
-version = "0.5.1"
+version = "0.5.2"
+source = "git+https://github.com/p2panda/p2panda.git?rev=b1d1f8edb152138d07efc12adffac667131ed7f7#b1d1f8edb152138d07efc12adffac667131ed7f7"
 dependencies = [
  "futures-util",
  "hex",
@@ -2720,6 +2721,7 @@ dependencies = [
 [[package]]
 name = "p2panda-core"
 version = "0.5.2"
+source = "git+https://github.com/p2panda/p2panda.git?rev=b1d1f8edb152138d07efc12adffac667131ed7f7#b1d1f8edb152138d07efc12adffac667131ed7f7"
 dependencies = [
  "blake3",
  "ciborium",
@@ -2734,6 +2736,7 @@ dependencies = [
 [[package]]
 name = "p2panda-discovery"
 version = "0.5.2"
+source = "git+https://github.com/p2panda/p2panda.git?rev=b1d1f8edb152138d07efc12adffac667131ed7f7#b1d1f8edb152138d07efc12adffac667131ed7f7"
 dependencies = [
  "blake3",
  "futures-util",
@@ -2760,6 +2763,7 @@ dependencies = [
 [[package]]
 name = "p2panda-net"
 version = "0.5.2"
+source = "git+https://github.com/p2panda/p2panda.git?rev=b1d1f8edb152138d07efc12adffac667131ed7f7#b1d1f8edb152138d07efc12adffac667131ed7f7"
 dependencies = [
  "ciborium",
  "futures-channel",
@@ -2786,6 +2790,7 @@ dependencies = [
 [[package]]
 name = "p2panda-store"
 version = "0.5.2"
+source = "git+https://github.com/p2panda/p2panda.git?rev=b1d1f8edb152138d07efc12adffac667131ed7f7#b1d1f8edb152138d07efc12adffac667131ed7f7"
 dependencies = [
  "p2panda-core",
  "serde",
@@ -2797,6 +2802,7 @@ dependencies = [
 [[package]]
 name = "p2panda-stream"
 version = "0.5.2"
+source = "git+https://github.com/p2panda/p2panda.git?rev=b1d1f8edb152138d07efc12adffac667131ed7f7#b1d1f8edb152138d07efc12adffac667131ed7f7"
 dependencies = [
  "futures-core",
  "p2panda-core",
@@ -2809,6 +2815,7 @@ dependencies = [
 [[package]]
 name = "p2panda-sync"
 version = "0.5.2"
+source = "git+https://github.com/p2panda/p2panda.git?rev=b1d1f8edb152138d07efc12adffac667131ed7f7#b1d1f8edb152138d07efc12adffac667131ed7f7"
 dependencies = [
  "futures",
  "futures-util",
