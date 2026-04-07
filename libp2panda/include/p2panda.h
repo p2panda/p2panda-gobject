@@ -139,12 +139,14 @@ G_DEFINE_AUTOPTR_CLEANUP_FUNC(P2pandaNodeId, p2panda_node_id_free)
 /**
  * p2panda_node_id_new_from_data:
  * @data: (array fixed-size=32):
+ * @relay_url: (nullable): The url of a iroh Relay Server
  * @error:
  *
  * Returns: (nullable): a new [struct@NodeId]
  */
 P2pandaNodeId *p2panda_node_id_new_from_data(const uint8_t data[32],
-					     GError **error);
+                                             GUri *relay_url,
+                                             GError **error);
 
 /**
  * p2panda_node_id_get_data:

@@ -326,7 +326,7 @@ impl Topic {
                 self.emit_by_name::<()>(
                     "sync-started",
                     &[
-                        &NodeId(remote_node_id),
+                        &NodeId::from(remote_node_id),
                         &session_id,
                         &incoming_operations,
                         &outgoing_operations,
@@ -347,7 +347,7 @@ impl Topic {
                 received_bytes_topic_total: _,
                 error: _,
             } => {
-                self.emit_by_name::<()>("sync-ended", &[&NodeId(remote_node_id), &session_id]);
+                self.emit_by_name::<()>("sync-ended", &[&NodeId::from(remote_node_id), &session_id]);
             }
             streams::StreamEvent::DecodingFailed { error, .. } => {
                 // TODO: figure out whether we need to expose more about the event
