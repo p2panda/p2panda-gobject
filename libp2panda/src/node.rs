@@ -90,10 +90,13 @@ pub unsafe extern "C" fn p2panda_node_id_free(node_id: *mut node::NodeId) {
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn p2panda_node_id_new_from_data(
     data: *const [u8; 32],
+    relay_url: *mut glib::ffi::GUri,
     error: *mut *mut GError,
 ) -> *mut node::NodeId {
     unsafe {
-        match node::NodeId::from_data(*data) {
+        let relay_url = Option::<glib::Uri>::from_glib_none(relay_url);
+
+        match node::NodeId::from_data(*data, relay_url) {
             Ok(node_id) => node_id.into_glib_ptr(),
             Err(e) => {
                 if !error.is_null() {
@@ -117,7 +120,6 @@ pub unsafe extern "C" fn p2panda_node_id_get_data(node_id: *mut node::NodeId) ->
 pub unsafe extern "C" fn p2panda_node_new(
     private_key: *mut identity::PrivateKey,
     database_url: *const c_char,
-    default_migrations: glib::ffi::gboolean,
     network_id: *mut node::NetworkId,
     relay_url: *mut glib::ffi::GUri,
     bootstrap_node: *mut node::NodeId,
@@ -130,7 +132,6 @@ pub unsafe extern "C" fn p2panda_node_new(
         } else {
             glib::GStr::from_ptr_checked(database_url)
         };
-        let default_migrations = default_migrations != 0;
         let network_id = Option::<node::NetworkId>::from_glib_none(network_id);
         let relay_url = Option::<glib::Uri>::from_glib_none(relay_url);
         let bootstrap_node = Option::<node::NodeId>::from_glib_none(bootstrap_node);
@@ -139,7 +140,6 @@ pub unsafe extern "C" fn p2panda_node_new(
         node::Node::new(
             private_key.as_ref(),
             database_url,
-            default_migrations,
             network_id.as_ref(),
             relay_url.as_ref(),
             bootstrap_node.as_ref(),

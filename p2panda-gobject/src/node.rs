@@ -35,16 +35,30 @@ impl NetworkId {
     }
 }
 
-// TODO: Should this just be PublicKey?
+// FIXME: Would be nice to use `node::EndpointAddr`, but it is an iroh type
+// or make `node::NodeId` contain the `relay_url`
+// See: https://github.com/p2panda/p2panda/issues/1114
 #[derive(Clone, Debug, PartialEq, Eq, glib::Boxed)]
 #[boxed_type(name = "P2pandaNodeId", nullable)]
-pub struct NodeId(pub(crate) node::NodeId);
+pub struct NodeId {
+    id: node::NodeId,
+    relay_url: Option<node::RelayUrl>,
+}
+
+impl From<node::PublicKey> for NodeId {
+    fn from(public_key: node::PublicKey) -> Self {
+        NodeId { id: public_key, relay_url: None }
+    }
+}
 
 impl NodeId {
-    pub fn from_data(data: [u8; 32]) -> Result<Self, glib::Error> {
-        Ok(Self(node::NodeId::try_from(data).map_err(|error| {
-            glib::Error::new(Error::Signature, &error.to_string())
-        })?))
+    pub fn from_data(data: [u8; 32], relay_url: Option<glib::Uri>) -> Result<Self, glib::Error> {
+        let id = node::NodeId::try_from(data)
+            .map_err(|error| glib::Error::new(Error::Signature, &error.to_string()))?;
+        let relay_url = relay_url.map(|relay_url|
+            node::RelayUrl::from_str(relay_url.to_str().as_str()).expect("Malformed URL"));
+
+        Ok(Self { id, relay_url })
     }
 }
 
@@ -118,9 +132,6 @@ pub mod imp {
                     glib::ParamSpecString::builder("database-url")
                         .flags(glib::ParamFlags::CONSTRUCT_ONLY | glib::ParamFlags::WRITABLE)
                         .build(),
-                    glib::ParamSpecBoolean::builder("default-migrations")
-                        .flags(glib::ParamFlags::CONSTRUCT_ONLY | glib::ParamFlags::WRITABLE)
-                        .build(),
                     /*glib::ParamSpecEnum::builder::<AckPolicy>("ack-policy")
                     .flags(glib::ParamFlags::CONSTRUCT_ONLY | glib::ParamFlags::WRITABLE)
                     .build(),*/
@@ -153,13 +164,6 @@ pub mod imp {
                         .get::<Option<&str>>()
                         .expect("type conformity checked by `Object::set_property`")
                         .map(|database_url| builder.database_url(database_url)),
-                    "default-migrations" => {
-                        let default_migrations = value
-                            .get::<bool>()
-                            .expect("type conformity checked by `Object::set_property`");
-
-                        Some(builder.default_migrations(default_migrations))
-                    }
                     /*"ack-policy" => {
                         let ack_policy = value
                             .get::<AckPolicy>()
@@ -182,7 +186,12 @@ pub mod imp {
                     "bootstrap" => value
                         .get::<Option<NodeId>>()
                         .expect("type conformity checked by `Object::set_property`")
-                        .map(|bootstrap| builder.bootstrap(bootstrap.0)),
+                        .map(|node_id| {
+                            let id = node_id.id;
+                            let relay_url = node_id.relay_url.expect("A boostrap node needs a known relay url");
+
+                            builder.bootstrap(id, relay_url)
+                        }),
                     "mdns-mode" => {
                         let mdns_mode = value
                             .get::<MdnsDiscoveryMode>()
@@ -214,7 +223,6 @@ impl Node {
     pub fn new(
         private_key: Option<&PrivateKey>,
         database_url: Option<&glib::GStr>,
-        default_migrations: bool,
         //ack_policy: AckPolicy,
         network_id: Option<&NetworkId>,
         relay_url: Option<&glib::Uri>,
@@ -224,7 +232,6 @@ impl Node {
         glib::Object::builder()
             .property("private-key", private_key)
             .property("database-url", database_url)
-            .property("default-migrations", default_migrations)
             //   .property("ack-policy", ack_policy)
             .property("network-id", network_id)
             .property("relay-url", relay_url)
@@ -234,7 +241,7 @@ impl Node {
     }
 
     pub fn id(&self) -> NodeId {
-        NodeId(self.node().id())
+        NodeId::from(self.node().id())
     }
 
     pub async fn spawn(&self) -> Result<(), glib::Error> {
