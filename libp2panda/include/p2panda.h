@@ -113,7 +113,7 @@ G_DEFINE_AUTOPTR_CLEANUP_FUNC(P2pandaNetworkId, p2panda_network_id_free)
  * p2panda_network_id_new_from_data:
  * @data: (array fixed-size=32):
  *
- * Return: a new `P2pandaNetworkId`
+ * Return: a new [struct@NetworkId]
  */
 P2pandaNetworkId *p2panda_network_id_new_from_data(const uint8_t data[32]);
 
@@ -121,7 +121,7 @@ P2pandaNetworkId *p2panda_network_id_new_from_data(const uint8_t data[32]);
  * p2panda_network_id_get_data:
  * @network_id:
  *
- * Retrieves the raw bytes of the `P2pandaNetworkId`
+ * Retrieves the raw bytes of the [struct@NetworkId]
  *
  * Returns: (transfer none) (array fixed-size=32):
  */
@@ -141,7 +141,7 @@ G_DEFINE_AUTOPTR_CLEANUP_FUNC(P2pandaNodeId, p2panda_node_id_free)
  * @data: (array fixed-size=32):
  * @error:
  *
- * Returns: (nullable): a new `P2pandaNodeId`
+ * Returns: (nullable): a new [struct@NodeId]
  */
 P2pandaNodeId *p2panda_node_id_new_from_data(const uint8_t data[32],
 					     GError **error);
@@ -150,7 +150,7 @@ P2pandaNodeId *p2panda_node_id_new_from_data(const uint8_t data[32],
  * p2panda_node_id_get_data:
  * @node_id:
  *
- * Retrieves the raw bytes of the `P2pandaNodeId`
+ * Retrieves the raw bytes of the [struct@NodeId]
  *
  * Returns: (transfer none) (array fixed-size=32):
  */
@@ -194,7 +194,7 @@ G_DEFINE_AUTOPTR_CLEANUP_FUNC(P2pandaTopicId, p2panda_topic_id_free)
  * p2panda_topic_id_new_from_data:
  * @data: (array fixed-size=32):
  *
- * Return: a new `P2pandaTopicId`
+ * Return: a new [struct@TopicId]
  */
 P2pandaTopicId *p2panda_topic_id_new_from_data(const uint8_t data[32]);
 
@@ -202,7 +202,7 @@ P2pandaTopicId *p2panda_topic_id_new_from_data(const uint8_t data[32]);
  * p2panda_topic_id_get_data:
  * @topic_id:
  *
- * Retrieves the raw bytes of the `P2pandaTopicId`
+ * Retrieves the raw bytes of the [struct@TopicId]
  *
  * Returns: (transfer none) (array fixed-size=32):
  */
@@ -236,7 +236,7 @@ P2pandaPrivateKey *p2panda_private_key_new_from_data(const uint8_t data[32]);
  * p2panda_private_key_get_data:
  * @private_key:
  *
- * Retrieves the raw bytes of the `P2pandaPrivateKey`
+ * Retrieves the raw bytes of the [struct@PrivateKey]
  *
  * Returns: (transfer none) (array fixed-size=32):
  */
@@ -255,7 +255,7 @@ G_DEFINE_AUTOPTR_CLEANUP_FUNC(P2pandaPublicKey, p2panda_public_key_free)
  * p2panda_private_key_get_public_key:
  * @private_key:
  *
- * Retrieves the the `P2pandaPublicKey`
+ * Retrieves the the [struct@PublicKey]
  *
  * Returns: (transfer full):
  */
@@ -266,7 +266,7 @@ P2pandaPublicKey *p2panda_private_key_get_public_key(P2pandaPrivateKey *private_
  * @data: (array fixed-size=32):
  * @error:
  *
- * Returns: (nullable): a new `P2pandaPublicKey`
+ * Returns: (nullable): a new [struct@PublicKey]
  */
 P2pandaPublicKey *p2panda_public_key_new_from_data(const uint8_t data[32],
                                                    GError **error);
@@ -275,7 +275,7 @@ P2pandaPublicKey *p2panda_public_key_new_from_data(const uint8_t data[32],
  * p2panda_public_key_get_data:
  * @public_key:
  *
- * Retrieves the raw bytes of the `P2pandaPublicKey`
+ * Retrieves the raw bytes of the [struct@PublicKey]
  *
  * Returns: (transfer none) (array fixed-size=32):
  */
@@ -340,7 +340,7 @@ void p2panda_node_spawn_async(P2pandaNode *node,
 /**
  * p2panda_node_spawn_finish:
  * @node:
- * @result: A `GAsyncResult`
+ * @result: A [iface@Gio.AsyncResult]
  * @error:
  *
  * Finishes the [method@Node.spawn_async] call.
@@ -383,7 +383,7 @@ void p2panda_topic_spawn_async(P2pandaTopic *topic,
 /**
  * p2panda_topic_spawn_finish:
  * @topic:
- * @result: A `GAsyncResult`
+ * @result: A [iface@Gio.AsyncResult]
  * @error:
  *
  * Finishes the [method@Topic.spawn_async] call.
@@ -414,7 +414,7 @@ void p2panda_topic_publish_async(P2pandaTopic *topic,
 /**
  * p2panda_publish_publish_finish:
  * @topic:
- * @result: A `GAsyncResult`
+ * @result: A [iface@Gio.AsyncResult]
  * @error:
  *
  * Finishes the [method@Topic.publish_async] call.
@@ -425,10 +425,10 @@ gboolean p2panda_topic_publish_finish(P2pandaTopic *topic,
 				      GAsyncResult *result,
     				      GError **error);
 
-/**************** P2pandaNodeError ****************/
+/**************** P2pandaError ****************/
 
 /**
- * P2pandaNodeError:
+ * P2pandaError:
  * @P2PANDA_LOADER_ERROR_FAILED:
  * @P2PANDA_LOADER_ERROR_UNKNOWN_IMAGE_FORMAT:
  * @P2PANDA_LOADER_ERROR_NO_MORE_FRAMES:
@@ -440,7 +440,7 @@ gboolean p2panda_topic_publish_finish(P2pandaTopic *topic,
 typedef enum
 {
     /**
-     * P2PANDA_LOADER_ERROR_FAILED:
+     * P2PANDA_ERROR_FAILED:
      *
      * Generic type for all other errors.
      */
@@ -472,6 +472,13 @@ typedef enum
     P2PANDA_ERROR_DECODING,
 
     /**
+     * P2PANDA_ERROR_REPLAY:
+     *
+     * Unable to replay a message.
+     */
+    P2PANDA_ERROR_REPLAY,
+
+    /**
      * P2PANDA_ERROR_HAS_NO_PERSISTENT:
      *
      * Message was send to a topic without the PERSISTENT flag.
@@ -492,12 +499,19 @@ typedef enum
      */
     P2PANDA_ERROR_PUBLISH,
 
+    /**
+     * P2PANDA_ERROR_SIGNATURE:
+     *
+     * Invalid sigature, when parsing [struct@NodeId] or [struct@PrivateKey].
+     */
+    P2PANDA_ERROR_SIGNATURE,
+
 } P2pandaError;
 
 /**
  * p2panda_error_quark:
  *
- * Error quark for [error@P2pandaError]
+ * Error quark for [error@Error]
  *
  * Returns: The error domain
  */
