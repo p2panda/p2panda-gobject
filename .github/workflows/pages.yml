@@ -30,7 +30,7 @@ jobs:
 
 
       - name: Check out libp2panda
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Configure libp2panda
         run: meson setup --prefix=/usr builddir -Dpython_tests=false -Dvapi=false -Dcapi_docs=true
@@ -44,7 +44,7 @@ jobs:
           mv ./libp2panda/libp2panda-0 ../_site
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v7
 
   # Deployment job
   deploy:
