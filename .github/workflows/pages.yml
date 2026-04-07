@@ -1,0 +1,61 @@
+name: Documentation
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: fedora:latest
+
+    steps:
+      - name: Install dependencies
+        run: |
+          dnf install -y \
+            gcc \
+            gi-docgen \
+            git \
+            gobject-introspection-devel \
+            meson \
+            cargo
+
+
+      - name: Check out libp2panda
+        uses: actions/checkout@v4
+
+      - name: Configure libp2panda
+        run: meson setup --prefix=/usr builddir -Dpython_tests=false -Dvapi=false -Dcapi_docs=true
+
+      - name: Build libp2panda
+        run: ninja -C builddir libp2panda/libp2panda-0
+
+      - name: Prepare docs
+        working-directory: builddir
+        run: |
+          mv ./libp2panda/libp2panda-0 ../_site
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+
+  # Deployment job
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
