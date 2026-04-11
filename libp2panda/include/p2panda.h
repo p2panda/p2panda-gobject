@@ -172,7 +172,7 @@ typedef enum
     P2PANDA_TOPIC_FLAGS_PERSISTENT,
     P2PANDA_TOPIC_FLAGS_EPHEMERAL,
     P2PANDA_TOPIC_FLAGS_FROM_START,
-} P2pandaMdnsDiscoveryMode;
+} P2pandaTopicFlags;
 
 GType p2panda_topic_flags_get_type(void);
 
