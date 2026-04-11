@@ -307,8 +307,8 @@ G_DEFINE_AUTOPTR_CLEANUP_FUNC(P2pandaRelayUrl, p2panda_relay_url_free)
 
 /**
  * p2panda_node_new:
+ * @private_key: (nullable): The private key to be used for this node
  * @database_url: (nullable): A sqlite address
- * @default_migrations: Whether to apply default migrations
  * @network_id: (nullable): The network id of the network to join
  * @relay_url: (nullable): The url of a iroh Relay Server
  * @bootstrap_node_id: (nullable): The address of the bootstrap node
@@ -320,7 +320,6 @@ G_DEFINE_AUTOPTR_CLEANUP_FUNC(P2pandaRelayUrl, p2panda_relay_url_free)
  */
 P2pandaNode *p2panda_node_new(P2pandaPrivateKey *private_key,
 			      const char *database_url,
-			      gboolean default_migrations,
 			      P2pandaNetworkId *network_id,
 			      GUri *relay_url,
 			      P2pandaNodeId *bootstrap_node_id,

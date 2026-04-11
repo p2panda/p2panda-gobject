@@ -23,7 +23,7 @@ def main():
     assert private_key
     public_key = private_key.get_public_key()
     assert public_key
-    node = P2panda.Node.new(private_key, None, True, network_id, None,  None, P2panda.MdnsDiscoveryMode.ACTIVE)
+    node = P2panda.Node.new(private_key, None, network_id, None,  None, P2panda.MdnsDiscoveryMode.ACTIVE)
     assert node
 
     global async_tests_remaining
@@ -32,7 +32,7 @@ def main():
     node.spawn_async(None, node_spawn_cb, None);
 
     private_key2 = P2panda.PrivateKey.new()
-    node2 = P2panda.Node.new(private_key2, None, True, network_id, None,  None, P2panda.MdnsDiscoveryMode.ACTIVE)
+    node2 = P2panda.Node.new(private_key2, None, network_id, None,  None, P2panda.MdnsDiscoveryMode.ACTIVE)
     assert node2
 
     node2.spawn_async(None, node2_spawn_cb, None);
