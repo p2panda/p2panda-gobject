@@ -8,6 +8,7 @@ use glib::subclass::prelude::*;
 
 use p2panda::{node, streams};
 use tokio::sync::Mutex;
+use tokio::task::AbortHandle;
 use tokio_stream::StreamExt;
 
 use crate::{
@@ -69,6 +70,8 @@ pub mod imp {
         flags: Cell<TopicFlags>,
         pub(super) stream_publisher: OnceCell<streams::StreamPublisher<Body>>,
         pub(super) ephemeral_publisher: OnceCell<streams::EphemeralStreamPublisher<Body>>,
+        pub(super) stream_abort_handle: OnceCell<AbortHandle>,
+        pub(super) ephemeral_abort_handle: OnceCell<AbortHandle>,
     }
 
     #[glib::object_subclass]
@@ -79,6 +82,15 @@ pub mod imp {
 
     #[glib::derived_properties]
     impl ObjectImpl for Topic {
+        fn dispose(&self) {
+            if let Some(abort_handle) = self.stream_abort_handle.get() {
+                abort_handle.abort();
+            }
+            if let Some(abort_handle) = self.ephemeral_abort_handle.get() {
+                abort_handle.abort();
+            }
+        }
+
         fn signals() -> &'static [Signal] {
             static SIGNALS: OnceLock<Vec<Signal>> = OnceLock::new();
             SIGNALS.get_or_init(|| {
@@ -241,17 +253,28 @@ impl Topic {
                             .set(publisher)
                             .expect("Topic can be spawned only once");
 
+                        let main_context = glib::MainContext::ref_thread_default();
                         let obj_weak = obj.downgrade();
                         // TODO: we need to abort this spawn when the Topic is dropped
-                        tokio::spawn(async move {
+                        let abort_handle = tokio::spawn(async move {
                             while let Some(event) = subscription.next().await {
-                                if let Some(obj) = obj_weak.upgrade() {
-                                    obj.emit_signal_for_event(event).await;
-                                } else {
-                                    break;
-                                }
+                                let obj_weak = obj_weak.clone();
+                                main_context
+                                    .spawn(async move {
+                                        if let Some(obj) = obj_weak.upgrade() {
+                                            obj.emit_signal_for_event(event).await;
+                                        }
+                                    })
+                                    .await
+                                    .unwrap();
                             }
-                        });
+                        })
+                        .abort_handle();
+
+                        obj.imp()
+                            .stream_abort_handle
+                            .set(abort_handle)
+                            .expect("Topic can be spawned only once");
                     }
 
                     if flags.contains(TopicFlags::EPHEMERAL) {
@@ -265,17 +288,25 @@ impl Topic {
                             .set(publisher)
                             .expect("Topic can be spawned only once");
 
+                        let main_context = glib::MainContext::ref_thread_default();
                         let obj_weak = obj.downgrade();
                         // TODO: we need to abort this spawn when the Topic is dropped
-                        tokio::spawn(async move {
+                        let abort_handle = tokio::spawn(async move {
                             while let Some(message) = subscription.next().await {
-                                if let Some(obj) = obj_weak.upgrade() {
-                                    obj.emit_signal_for_ephemeral_message(message);
-                                } else {
-                                    break;
-                                }
+                                let obj_weak = obj_weak.clone();
+                                main_context.invoke(move || {
+                                    if let Some(obj) = obj_weak.upgrade() {
+                                        obj.emit_signal_for_ephemeral_message(message);
+                                    }
+                                });
                             }
-                        });
+                        })
+                        .abort_handle();
+
+                        obj.imp()
+                            .ephemeral_abort_handle
+                            .set(abort_handle)
+                            .expect("Topic can be spawned only once");
                     }
 
                     *spawned = true;
@@ -298,7 +329,6 @@ impl Topic {
                 let datetime =
                     glib::DateTime::from_unix_utc_usec(operation.timestamp() as i64).unwrap();
                 let bytes: glib::Bytes = operation.message().into();
-                //TODO: invoke on the thread owning the main context
                 let ack = self.emit_by_name::<bool>(
                     "message",
                     &[

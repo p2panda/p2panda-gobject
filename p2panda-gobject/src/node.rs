@@ -10,6 +10,7 @@ use p2panda::node;
 use rand::prelude::*;
 use tokio::runtime::Runtime;
 use tokio::sync::Mutex;
+use tokio::task::AbortHandle;
 use tokio_stream::StreamExt;
 
 use crate::{error::Error, identity::PrivateKey};
@@ -111,6 +112,7 @@ pub mod imp {
         runtime: OnceLock<Runtime>,
         pub(super) node_builder: RefCell<Option<node::NodeBuilder>>,
         pub(super) node: OnceCell<node::Node>,
+        pub(super) system_event_abort_handle: OnceCell<AbortHandle>,
     }
 
     #[glib::object_subclass]
@@ -120,6 +122,12 @@ pub mod imp {
     }
 
     impl ObjectImpl for Node {
+        fn dispose(&self) {
+            if let Some(abort_handle) = self.system_event_abort_handle.get() {
+                abort_handle.abort();
+            }
+        }
+
         fn signals() -> &'static [Signal] {
             static SIGNALS: OnceLock<Vec<Signal>> = OnceLock::new();
             SIGNALS.get_or_init(|| vec![Signal::builder("system-event").build()])
@@ -278,15 +286,25 @@ impl Node {
                     let weak_obj = obj.downgrade();
                     // TODO: We need to abort this spawn when the Node is dropped (but the Runtime is
                     // dropped anyway)
-                    tokio::spawn(async move {
+                    let main_context = glib::MainContext::ref_thread_default();
+                    let abort_handle = tokio::spawn(async move {
                         tokio::pin!(event_stream);
                         while let Some(_event) = event_stream.next().await {
-                            if let Some(obj) = weak_obj.upgrade() {
-                                // TODO: add the event to the signal
-                                obj.emit_by_name::<()>("system-event", &[]);
-                            }
+                            let weak_obj = weak_obj.clone();
+                            main_context.invoke(move || {
+                                if let Some(obj) = weak_obj.upgrade() {
+                                    // TODO: add the event to the signal
+                                    obj.emit_by_name::<()>("system-event", &[]);
+                                }
+                            })
                         }
-                    });
+                    })
+                    .abort_handle();
+
+                    obj.imp()
+                        .system_event_abort_handle
+                        .set(abort_handle)
+                        .expect("Node can be spawned only once");
 
                     *spawned = true;
 
