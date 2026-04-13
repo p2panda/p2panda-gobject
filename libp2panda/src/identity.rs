@@ -34,7 +34,7 @@ pub unsafe extern "C" fn p2panda_private_key_new() -> *const identity::PrivateKe
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn p2panda_private_key_get_public_key(
     private_key: *const identity::PrivateKey,
-) -> *const identity::PublicKey {
+) -> *mut identity::PublicKey {
     unsafe {
         let private_key = identity::PrivateKey::from_glib_none(private_key);
         private_key.public_key().into_glib_ptr()

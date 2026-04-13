@@ -1,5 +1,6 @@
 use std::ffi::c_char;
 use std::ffi::c_int;
+use std::ops::Deref;
 
 use futures::future::{AbortHandle, Abortable};
 use gio::ffi::{GAsyncReadyCallback, GAsyncResult, GTask};
@@ -126,23 +127,23 @@ pub unsafe extern "C" fn p2panda_node_new(
     mdns_mode: c_int,
 ) -> *mut P2pandaNode {
     unsafe {
-        let private_key = Option::<identity::PrivateKey>::from_glib_none(private_key);
+        let private_key = Option::<identity::PrivateKey>::from_glib_borrow(private_key);
         let database_url = if database_url.is_null() {
             None
         } else {
             glib::GStr::from_ptr_checked(database_url)
         };
-        let network_id = Option::<node::NetworkId>::from_glib_none(network_id);
-        let relay_url = Option::<glib::Uri>::from_glib_none(relay_url);
-        let bootstrap_node = Option::<node::NodeId>::from_glib_none(bootstrap_node);
+        let network_id = Option::<node::NetworkId>::from_glib_borrow(network_id);
+        let relay_url = Option::<glib::Uri>::from_glib_borrow(relay_url);
+        let bootstrap_node = Option::<node::NodeId>::from_glib_borrow(bootstrap_node);
         let mdns_mode = node::MdnsDiscoveryMode::from_glib(mdns_mode);
 
         node::Node::new(
-            private_key.as_ref(),
+            private_key.deref().as_ref(),
             database_url,
-            network_id.as_ref(),
-            relay_url.as_ref(),
-            bootstrap_node.as_ref(),
+            network_id.deref().as_ref(),
+            relay_url.deref().as_ref(),
+            bootstrap_node.deref().as_ref(),
             mdns_mode,
         )
         .into_glib_ptr()
