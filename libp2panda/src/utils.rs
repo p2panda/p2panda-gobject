@@ -1,18 +1,16 @@
 /* Taken from glycin https://gitlab.gnome.org/GNOME/glycin/-/blob/main/libglycin/src/common.rs */
-use gio::ffi::GAsyncReadyCallback;
+use gio::ffi::GAsyncResult;
 use gio::prelude::*;
-use glib::ffi::gpointer;
+use glib::{ffi::gpointer, gobject_ffi::GObject};
+
+type GAsyncReadyCallback = unsafe extern "C" fn(*mut GObject, *mut GAsyncResult, gpointer);
 
 struct GPointerSend(pub gpointer);
 
 unsafe impl Send for GPointerSend {}
 
 pub struct GAsyncReadyCallbackSend {
-    callback: unsafe extern "C" fn(
-        *mut glib::gobject_ffi::GObject,
-        *mut gio::ffi::GAsyncResult,
-        gpointer,
-    ),
+    callback: GAsyncReadyCallback,
     user_data: GPointerSend,
 }
 
@@ -21,7 +19,7 @@ unsafe impl Send for GAsyncReadyCallbackSend {}
 impl GAsyncReadyCallbackSend {
     pub fn new(callback: GAsyncReadyCallback, user_data: gpointer) -> Self {
         Self {
-            callback: callback.unwrap(),
+            callback,
             user_data: GPointerSend(user_data),
         }
     }

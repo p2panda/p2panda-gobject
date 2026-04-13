@@ -329,7 +329,7 @@ P2pandaNode *p2panda_node_new(P2pandaPrivateKey *private_key,
  * p2panda_node_spawn_async:
  * @node:
  * @cancellable: (nullable):
- * @callback:
+ * @callback: (nullable):
  * @user_data: user data to pass to @callback
  *
  */
@@ -372,7 +372,7 @@ P2pandaTopic *p2panda_topic_new(P2pandaNode *node,
  * p2panda_topic_spawn_async:
  * @topic:
  * @cancellable: (nullable):
- * @callback:
+ * @callback: (nullable):
  * @user_data: user data to pass to @callback
  *
  */
@@ -401,7 +401,7 @@ gboolean p2panda_topic_spawn_finish(P2pandaTopic *topic,
  * @bytes: (transfer none):
  * @ephemeral: Whether this message should be ephemeral or persistent
  * @cancellable: (nullable):
- * @callback:
+ * @callback (nullable):
  * @user_data: user data to pass to @callback
  *
  */
