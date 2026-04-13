@@ -7,9 +7,62 @@
 G_BEGIN_DECLS
 
 /**
+ * P2pandaNode:bootstrap:
+ *
+ * A node that is used to find other nodes.
+ */
+
+/**
+ * P2pandaNode:database-url:
+ *
+ * The [uri](https://www.sqlite.org/uri.html) to a sqlite database.
+ */
+
+/**
+ * P2pandaNode:network-id:
+ *
+ * The id of the network to this node will join.
+ */
+
+/**
+ * P2pandaNode:private-key:
+ *
+ * The private key representing the node's identity.
+ */
+
+/**
+ * P2pandaNode:relay-url:
+ *
+ * The url to a [iroh relay](https://docs.iroh.computer/concepts/relays).
+ */
+
+/**
  * P2pandaNode::system-event:
  *
- * Emitted on system events
+ * Emitted on system events.
+ *
+ * This signal is emitted on the main context that was thread default when the node was spawned.
+ */
+
+/**
+ * P2pandaTopic:node:
+ *
+ * A spawned [class@Node].
+ *
+ */
+
+/**
+ * P2pandaTopic:flags:
+ *
+ * Configuration for the [class@Topic].
+ *
+ */
+
+/**
+ * P2pandaTopic:topic-id:
+ *
+ * The id of the topic this [class@Topic] will be subscribed to.
+ *
  */
 
 /**
@@ -19,7 +72,9 @@ G_BEGIN_DECLS
  * @datetime: The timestamp
  * @bytes: The message
  *
- * Emitted on incomming persistent message
+ * Emitted on incomming persistent message.
+ *
+ * This signal is emitted on the main context that was thread default when the topic was spawned.
  */
 
 /**
@@ -29,7 +84,9 @@ G_BEGIN_DECLS
  * @datetime: The timestamp
  * @bytes: The content of the message
  *
- * Emitted on incomming ephemeral message
+ * Emitted on incomming ephemeral message.
+ *
+ * This signal is emitted on the main context that was thread default when the topic was spawned.
  */
 
 /**
@@ -42,7 +99,9 @@ G_BEGIN_DECLS
  * @incoming_bytes:
  * @outgoing_bytes:
  *
- * Emitted for errors
+ * Emitted for errors.
+ *
+ * This signal is emitted on the main context that was thread default when the topic was spawned.
  */
 
 /**
@@ -51,7 +110,9 @@ G_BEGIN_DECLS
  * @remote_node_id: The public key for the remote node
  * @session_id:
  *
- * Emitted when a topic finishes syncing
+ * Emitted when a topic finishes syncing.
+ *
+ * This signal is emitted on the main context that was thread default when the topic was spawned.
  */
 
 /**
@@ -59,7 +120,9 @@ G_BEGIN_DECLS
  * @topic:
  * @error:
  *
- * Emitted when a topic finishes syncing
+ * Emitted when a topic finishes syncing.
+ *
+ * This signal is emitted on the main context that was thread default when the topic was spawned.
  */
 
 /**
@@ -332,6 +395,11 @@ P2pandaNode *p2panda_node_new(P2pandaPrivateKey *private_key,
  * @callback: (nullable):
  * @user_data: user data to pass to @callback
  *
+ * Spawn the node.
+ *
+ * Before spawning the node no network communcation takes place, and the [class@Node]
+ * can't be used.
+ *
  */
 void p2panda_node_spawn_async(P2pandaNode *node,
 			      GCancellable *cancellable,
@@ -375,6 +443,11 @@ P2pandaTopic *p2panda_topic_new(P2pandaNode *node,
  * @callback: (nullable):
  * @user_data: user data to pass to @callback
  *
+ * Spawn the topic.
+ *
+ * Before spawning the topic no network communcation takes place, and the [class@Topic]
+ * won't be able to send nor receive messages.
+ *
  */
 void p2panda_topic_spawn_async(P2pandaTopic *topic,
 			       GCancellable *cancellable,
@@ -404,6 +477,8 @@ gboolean p2panda_topic_spawn_finish(P2pandaTopic *topic,
  * @callback (nullable):
  * @user_data: user data to pass to @callback
  *
+ * Publish a message to a topic.
+ *
  */
 void p2panda_topic_publish_async(P2pandaTopic *topic,
 			         GBytes *bytes,
@@ -413,7 +488,7 @@ void p2panda_topic_publish_async(P2pandaTopic *topic,
     			         gpointer user_data);
 
 /**
- * p2panda_publish_publish_finish:
+ * p2panda_topic_publish_finish:
  * @topic:
  * @result: A [iface@Gio.AsyncResult]
  * @error:
