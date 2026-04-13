@@ -30,3 +30,7 @@ meson compile -C _build
 
 ### Use libp2panda in python
 The tests contain a example on how to use libp2padna in python.
+
+## Credits
+
+Thanks a lot to Sophie Herold, for writing [libglycin](https://gitlab.gnome.org/GNOME/glycin) that was used as a base for figuring out how to write the bindings and Sergey Bugaev for reviewing the GLib introspection API.
