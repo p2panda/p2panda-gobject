@@ -40,10 +40,10 @@ type Body = Vec<u8>;
 
 #[glib::flags(name = "P2pandaTopicFlags")]
 pub enum TopicFlags {
-    NONE = (1 << 0),
-    PERSISTENT = (1 << 1),
-    EPHEMERAL = (1 << 2),
-    FROM_START = (1 << 3),
+    NONE = 0,
+    PERSISTENT = (1 << 0),
+    EPHEMERAL = (1 << 1),
+    FROM_START = (1 << 2),
 }
 
 impl Default for TopicFlags {
@@ -347,7 +347,10 @@ impl Topic {
                 received_bytes_topic_total: _,
                 error: _,
             } => {
-                self.emit_by_name::<()>("sync-ended", &[&NodeId::from(remote_node_id), &session_id]);
+                self.emit_by_name::<()>(
+                    "sync-ended",
+                    &[&NodeId::from(remote_node_id), &session_id],
+                );
             }
             streams::StreamEvent::DecodingFailed { error, .. } => {
                 // TODO: figure out whether we need to expose more about the event

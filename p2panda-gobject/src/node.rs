@@ -47,7 +47,10 @@ pub struct NodeId {
 
 impl From<node::PublicKey> for NodeId {
     fn from(public_key: node::PublicKey) -> Self {
-        NodeId { id: public_key, relay_url: None }
+        NodeId {
+            id: public_key,
+            relay_url: None,
+        }
     }
 }
 
@@ -55,8 +58,9 @@ impl NodeId {
     pub fn from_data(data: [u8; 32], relay_url: Option<glib::Uri>) -> Result<Self, glib::Error> {
         let id = node::NodeId::try_from(data)
             .map_err(|error| glib::Error::new(Error::Signature, &error.to_string()))?;
-        let relay_url = relay_url.map(|relay_url|
-            node::RelayUrl::from_str(relay_url.to_str().as_str()).expect("Malformed URL"));
+        let relay_url = relay_url.map(|relay_url| {
+            node::RelayUrl::from_str(relay_url.to_str().as_str()).expect("Malformed URL")
+        });
 
         Ok(Self { id, relay_url })
     }
@@ -188,7 +192,9 @@ pub mod imp {
                         .expect("type conformity checked by `Object::set_property`")
                         .map(|node_id| {
                             let id = node_id.id;
-                            let relay_url = node_id.relay_url.expect("A boostrap node needs a known relay url");
+                            let relay_url = node_id
+                                .relay_url
+                                .expect("A boostrap node needs a known relay url");
 
                             builder.bootstrap(id, relay_url)
                         }),

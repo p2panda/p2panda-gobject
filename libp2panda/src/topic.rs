@@ -142,7 +142,7 @@ pub unsafe extern "C" fn p2panda_topic_publish_async(
 ) {
     unsafe {
         let obj = topic::Topic::from_glib_none(topic);
-        let bytes = glib::Bytes::from_glib_full(bytes);
+        let bytes = glib::Bytes::from_glib_none(bytes);
         let cancellable: Option<gio::Cancellable> = from_glib_none(cancellable);
         let callback = GAsyncReadyCallbackSend::new(callback, user_data);
 

@@ -160,18 +160,18 @@ const uint8_t* p2panda_node_id_get_data(P2pandaNodeId *node_id);
 
 /**
  * P2pandaTopicFlags:
- * @P2PANDA_TOPIC_FLAGS_NONE:
- * @P2PANDA_TOPIC_FLAGS_PERSISTENT:
- * @P2PANDA_TOPIC_FLAGS_EPHEMERAL:
- * @P2PANDA_TOPIC_FLAGS_FROM_START:
+ * @P2PANDA_TOPIC_NONE:
+ * @P2PANDA_TOPIC_PERSISTENT:
+ * @P2PANDA_TOPIC_EPHEMERAL:
+ * @P2PANDA_TOPIC_FROM_START:
  *
  */
 typedef enum
 {
-    P2PANDA_TOPIC_FLAGS_NONE,
-    P2PANDA_TOPIC_FLAGS_PERSISTENT,
-    P2PANDA_TOPIC_FLAGS_EPHEMERAL,
-    P2PANDA_TOPIC_FLAGS_FROM_START,
+    P2PANDA_TOPIC_NONE = 0,
+    P2PANDA_TOPIC_PERSISTENT = 1 << 0,
+    P2PANDA_TOPIC_EPHEMERAL = 1 << 1,
+    P2PANDA_TOPIC_FROM_START = 1 << 2,
 } P2pandaTopicFlags;
 
 GType p2panda_topic_flags_get_type(void);
@@ -362,7 +362,7 @@ gboolean p2panda_node_spawn_finish(P2pandaNode *node,
  *
  * Create a topic handle for the give [class@Node]
  *
- * Returns: (transfer full): a new [class@Node]
+ * Returns: (transfer full): a new [class@Topic]
  */
 P2pandaTopic *p2panda_topic_new(P2pandaNode *node,
 				P2pandaTopicId *topic_id,
@@ -398,7 +398,7 @@ gboolean p2panda_topic_spawn_finish(P2pandaTopic *topic,
 /**
  * p2panda_topic_publish_async:
  * @topic:
- * @bytes: (transfer full):
+ * @bytes: (transfer none):
  * @ephemeral: Whether this message should be ephemeral or persistent
  * @cancellable: (nullable):
  * @callback:
@@ -430,13 +430,17 @@ gboolean p2panda_topic_publish_finish(P2pandaTopic *topic,
 
 /**
  * P2pandaError:
- * @P2PANDA_LOADER_ERROR_FAILED:
- * @P2PANDA_LOADER_ERROR_UNKNOWN_IMAGE_FORMAT:
- * @P2PANDA_LOADER_ERROR_NO_MORE_FRAMES:
+ * @P2PANDA_ERROR_FAILED:
+ * @P2PANDA_ERROR_SPAWN_NODE:
+ * @P2PANDA_ERROR_SPAWN_TOPIC:
+ * @P2PANDA_ERROR_NOT_SPAWNED:
+ * @P2PANDA_ERROR_DECODING:
+ * @P2PANDA_ERROR_REPLAY:
+ * @P2PANDA_ERROR_HAS_NO_PERSISTENT:
+ * @P2PANDA_ERROR_PUBLISH:
+ * @P2PANDA_ERROR_SIGNATURE,
  *
- * Errors that can appear while loading images.
- *
- * Since: 2.0
+ * Errors that may happen while interacting with a node and topic
  */
 typedef enum
 {
