@@ -76,7 +76,7 @@ pub unsafe extern "C" fn p2panda_topic_spawn_async(
     unsafe {
         let obj = topic::Topic::from_glib_none(topic);
         let cancellable: Option<gio::Cancellable> = from_glib_none(cancellable);
-        let callback = GAsyncReadyCallbackSend::new(callback, user_data);
+        let callback = callback.map(|callback| GAsyncReadyCallbackSend::new(callback, user_data));
 
         let (abort_handle, abort_registration) = AbortHandle::new_pair();
         let cancel_signal = if let Some(cancellable) = &cancellable {
@@ -91,8 +91,10 @@ pub unsafe extern "C" fn p2panda_topic_spawn_async(
                 cancellable.disconnect_cancelled(cancel_signal);
             }
 
-            let result = task.upcast_ref::<gio::AsyncResult>().as_ptr();
-            callback.call(obj.unwrap(), result);
+            if let Some(callback) = callback {
+                let result = task.upcast_ref::<gio::AsyncResult>().as_ptr();
+                callback.call(obj.unwrap(), result);
+            }
         };
 
         let task = gio::Task::new(Some(&obj), cancellable_.as_ref(), closure);
@@ -144,7 +146,7 @@ pub unsafe extern "C" fn p2panda_topic_publish_async(
         let obj = topic::Topic::from_glib_none(topic);
         let bytes = glib::Bytes::from_glib_none(bytes);
         let cancellable: Option<gio::Cancellable> = from_glib_none(cancellable);
-        let callback = GAsyncReadyCallbackSend::new(callback, user_data);
+        let callback = callback.map(|callback| GAsyncReadyCallbackSend::new(callback, user_data));
 
         let (abort_handle, abort_registration) = AbortHandle::new_pair();
         let cancel_signal = if let Some(cancellable) = &cancellable {
@@ -159,8 +161,10 @@ pub unsafe extern "C" fn p2panda_topic_publish_async(
                 cancellable.disconnect_cancelled(cancel_signal);
             }
 
-            let result = task.upcast_ref::<gio::AsyncResult>().as_ptr();
-            callback.call(obj.unwrap(), result);
+            if let Some(callback) = callback {
+                let result = task.upcast_ref::<gio::AsyncResult>().as_ptr();
+                callback.call(obj.unwrap(), result);
+            }
         };
 
         let task = gio::Task::new(Some(&obj), cancellable_.as_ref(), closure);
