@@ -218,6 +218,14 @@ pub unsafe extern "C" fn p2panda_topic_id_new() -> *mut topic::TopicId {
 }
 
 #[unsafe(no_mangle)]
+pub unsafe extern "C" fn p2panda_topic_id_get_data(topic_id: *mut topic::TopicId) -> *const [u8; 32] {
+    unsafe {
+        let topic_id = topic::TopicId::from_glib_none(topic_id);
+        topic_id.into_glib_ptr() as *const [u8; 32]
+    }
+}
+
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn p2panda_topic_id_copy(
     topic_id: *mut topic::TopicId,
 ) -> *mut topic::TopicId {
