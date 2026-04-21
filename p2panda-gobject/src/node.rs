@@ -167,53 +167,68 @@ pub mod imp {
             self.node_builder.replace_with(|builder| {
                 let builder = builder.take().unwrap_or_else(node::Node::builder);
 
-                match pspec.name() {
-                    "private-key" => value
+                let builder = match pspec.name() {
+                    "private-key" => match value
                         .get::<Option<PrivateKey>>()
                         .expect("type conformity checked by `Object::set_property`")
-                        .map(|private_key| builder.private_key(private_key.0)),
-                    "database-url" => value
+                    {
+                        Some(private_key) => builder.private_key(private_key.0),
+                        None => builder,
+                    },
+                    "database-url" => match value
                         .get::<Option<&str>>()
                         .expect("type conformity checked by `Object::set_property`")
-                        .map(|database_url| builder.database_url(database_url)),
+                    {
+                        Some(database_url) => builder.database_url(database_url),
+                        None => builder,
+                    },
                     /*"ack-policy" => {
                         let ack_policy = value
                             .get::<AckPolicy>()
                             .expect("type conformity checked by `Object::set_property`");
-                        Some(builder.ack_policy(ack_policy.into()))
+                        builder.ack_policy(ack_policy.into())
                     }*/
-                    "network-id" => value
+                    "network-id" => match value
                         .get::<Option<NetworkId>>()
                         .expect("type conformity checked by `Object::set_property`")
-                        .map(|network_id| builder.network_id(network_id.0)),
-                    "relay-url" => value
+                    {
+                        Some(network_id) => builder.network_id(network_id.0),
+                        None => builder,
+                    },
+                    "relay-url" => match value
                         .get::<Option<glib::Uri>>()
                         .expect("type conformity checked by `Object::set_property`")
-                        .map(|relay_url| {
-                            builder.relay_url(
-                                node::RelayUrl::from_str(relay_url.to_str().as_str())
-                                    .expect("Malformed URL"),
-                            )
-                        }),
-                    "bootstrap" => value
+                    {
+                        Some(relay_url) => builder.relay_url(
+                            node::RelayUrl::from_str(relay_url.to_str().as_str())
+                                .expect("Malformed URL"),
+                        ),
+                        None => builder,
+                    },
+                    "bootstrap" => match value
                         .get::<Option<NodeId>>()
                         .expect("type conformity checked by `Object::set_property`")
-                        .map(|node_id| {
+                    {
+                        Some(node_id) => {
                             let id = node_id.id;
                             let relay_url = node_id
                                 .relay_url
                                 .expect("A boostrap node needs a known relay url");
 
                             builder.bootstrap(id, relay_url)
-                        }),
+                        }
+                        None => builder,
+                    },
                     "mdns-mode" => {
                         let mdns_mode = value
                             .get::<MdnsDiscoveryMode>()
                             .expect("type conformity checked by `Object::set_property`");
-                        Some(builder.mdns_mode(mdns_mode.into()))
+                        builder.mdns_mode(mdns_mode.into())
                     }
                     _ => unimplemented!(),
-                }
+                };
+
+                Some(builder)
             });
         }
     }
