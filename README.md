@@ -29,7 +29,7 @@ meson compile -C _build
 ```
 
 ### Use libp2panda in python
-The tests contain a example on how to use libp2padna in python.
+The tests contain a example on how to use libp2panda in python.
 
 ## Credits
 
