@@ -24,7 +24,7 @@ meson install -C _build
 ### Build docs for libp2panda
 To generate the docs the following commands can be used:
 ```
-meson setup  -Dcapi_docs=true  --reconfigure
+meson setup _build -Dcapi_docs=true --reconfigure
 meson compile -C _build
 ```
 
