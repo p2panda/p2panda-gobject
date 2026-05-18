@@ -23,7 +23,7 @@ instructions](https://mesonbuild.com/Getting-meson.html).
 To build the project the following commands can be used:
 
 ```bash
-meson setup _build --prefix=/usr
+meson setup _build -Dcapi_docs=true --reconfigure
 meson compile -C _build
 ```
 
@@ -46,7 +46,7 @@ meson compile -C _build
 
 ### Use libp2panda in python
 
-The tests contain a example on how to use libp2padna in python.
+The tests contain an example on how to use libp2panda in python.
 
 ## Credits
 
