@@ -16,11 +16,15 @@ codegen-units = 1
 resolver = "3"
 members = [
     "p2panda-gobject",
-    "libp2panda",
+    "libp2panda", "libp2panda-rebind/libp2panda-rebind", "libp2panda-rebind/libp2panda-rebind/sys",
 ]
+exclude = ["libp2panda-rebind/gir"]
 
 [workspace.dependencies]
 p2panda-gobject = { path = "p2panda-gobject/" }
-glib = { version = "0.22", features = ["v2_80"] }
-gio = { version = "0.22" }
-
+libc = { version = "0.2" }
+gobject-sys = { version = "0.22.0", features = ["v2_80"] }
+glib = { version = "0.22.0", features = ["v2_80"] }
+glib-sys = { version = "0.22.0", features = ["v2_80"] }
+gio = { version = "0.22.0", features = ["v2_80"] }
+gio-sys = { version = "0.22.0", features = ["v2_80"] }

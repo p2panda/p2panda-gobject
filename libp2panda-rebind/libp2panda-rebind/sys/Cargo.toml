@@ -1,0 +1,37 @@
+[package]
+name = "p2panda-sys"
+version = "0.0.1"
+edition = "2021"
+build = "build.rs"
+
+[package.metadata.system-deps.p2panda_0]
+name = "p2panda-0"
+version = "0.1"
+
+[package.metadata.docs.rs]
+rustdoc-args = ["--generate-link-to-definition"]
+all-features = true
+
+[lib]
+name = "p2panda_sys"
+
+[dependencies]
+libc = "0.2"
+
+[dependencies.gio-sys]
+workspace = true
+
+[dependencies.glib-sys]
+workspace = true
+
+[dependencies.gobject-sys]
+workspace = true
+
+[build-dependencies]
+system-deps = "9"
+
+[dev-dependencies]
+shell-words = "1.0.0"
+tempfile = "3"
+
+[features]

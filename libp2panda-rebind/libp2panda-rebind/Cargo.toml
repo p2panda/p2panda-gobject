@@ -1,0 +1,22 @@
+[package]
+name = "libp2panda-rebind"
+version.workspace = true
+authors.workspace = true
+description.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+libc.workspace = true
+glib.workspace = true
+gio.workspace = true
+
+[dependencies.ffi]
+package = "p2panda-sys"
+path = "./sys"
+
+[package.metadata.docs.rs]
+all-features = true
