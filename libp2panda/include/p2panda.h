@@ -381,11 +381,11 @@ G_DEFINE_AUTOPTR_CLEANUP_FUNC(P2pandaRelayUrl, p2panda_relay_url_free)
  *
  * Returns: (transfer full): a new [class@Node]
  */
-P2pandaNode *p2panda_node_new(P2pandaPrivateKey *private_key,
+P2pandaNode *p2panda_node_new(const P2pandaPrivateKey *private_key,
 			      const char *database_url,
-			      P2pandaNetworkId *network_id,
+			      const P2pandaNetworkId *network_id,
 			      GUri *relay_url,
-			      P2pandaNodeId *bootstrap_node_id,
+			      const P2pandaNodeId *bootstrap_node_id,
 			      P2pandaMdnsDiscoveryMode mdns_mode);
 
 /**
@@ -433,8 +433,8 @@ gboolean p2panda_node_spawn_finish(P2pandaNode *node,
  * Returns: (transfer full): a new [class@Topic]
  */
 P2pandaTopic *p2panda_topic_new(P2pandaNode *node,
-				P2pandaTopicId *topic_id,
-				uint flags);
+				const P2pandaTopicId *topic_id,
+				uint8_t flags);
 
 /**
  * p2panda_topic_spawn_async:

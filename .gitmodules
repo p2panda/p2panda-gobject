@@ -1,0 +1,6 @@
+[submodule "libp2panda-rebind/gir"]
+	path = libp2panda-rebind/gir
+	url = https://github.com/gtk-rs/gir
+[submodule "libp2panda-rebind/gir-files"]
+	path = libp2panda-rebind/gir-files
+	url = https://github.com/gtk-rs/gir-files

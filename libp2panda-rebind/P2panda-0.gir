@@ -1,0 +1,1142 @@
+<?xml version="1.0"?>
+<!-- This file was automatically generated from C sources - DO NOT EDIT!
+To affect the contents of this file, edit the original C definitions,
+and/or use gtk-doc annotations.  -->
+<repository version="1.2"
+            xmlns="http://www.gtk.org/introspection/core/1.0"
+            xmlns:c="http://www.gtk.org/introspection/c/1.0"
+            xmlns:doc="http://www.gtk.org/introspection/doc/1.0"
+            xmlns:glib="http://www.gtk.org/introspection/glib/1.0">
+  <include name="GLib" version="2.0"/>
+  <include name="GObject" version="2.0"/>
+  <include name="Gio" version="2.0"/>
+  <package name="p2panda-0"/>
+  <c:include name="p2panda.h"/>
+  <doc:format name="unknown"/>
+  <namespace name="P2panda"
+             version="0"
+             shared-library="libp2panda-0.so.0"
+             c:identifier-prefixes="P2panda"
+             c:symbol-prefixes="p2panda">
+    <enumeration name="Error"
+                 glib:type-name="P2pandaError"
+                 glib:get-type="p2panda_error_get_type"
+                 c:type="P2pandaError"
+                 glib:error-domain="p2panda-error">
+      <doc xml:space="preserve"
+           filename="libp2panda/include/p2panda.h"
+           line="506">Errors that may happen while interacting with a node and topic</doc>
+      <member name="failed"
+              value="0"
+              c:identifier="P2PANDA_ERROR_FAILED"
+              glib:nick="failed"
+              glib:name="Failed">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="522">Generic type for all other errors.</doc>
+      </member>
+      <member name="spawn_node"
+              value="1"
+              c:identifier="P2PANDA_ERROR_SPAWN_NODE"
+              glib:nick="spawn-node"
+              glib:name="SpawnNode">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="528">Failed to spawn node.</doc>
+      </member>
+      <member name="spawn_topic"
+              value="2"
+              c:identifier="P2PANDA_ERROR_SPAWN_TOPIC"
+              glib:nick="spawn-topic"
+              glib:name="SpawnTopic">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="534">Failed to spawn topic.</doc>
+      </member>
+      <member name="not_spawned"
+              value="3"
+              c:identifier="P2PANDA_ERROR_NOT_SPAWNED"
+              glib:nick="not-spawned"
+              glib:name="NotSpawned">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="540">Topic or Node wasn't spawned.</doc>
+      </member>
+      <member name="decoding"
+              value="4"
+              c:identifier="P2PANDA_ERROR_DECODING"
+              glib:nick="decoding"
+              glib:name="Decoding">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="547">Unable to decode a message.</doc>
+      </member>
+      <member name="replay"
+              value="5"
+              c:identifier="P2PANDA_ERROR_REPLAY"
+              glib:nick="replay"
+              glib:name="Replay">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="554">Unable to replay a message.</doc>
+      </member>
+      <member name="has_no_persistent"
+              value="6"
+              c:identifier="P2PANDA_ERROR_HAS_NO_PERSISTENT"
+              glib:nick="has-no-persistent"
+              glib:name="HasNoPersistent">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="561">Message was send to a topic without the PERSISTENT flag.</doc>
+      </member>
+      <member name="has_no_ephemeral"
+              value="7"
+              c:identifier="P2PANDA_ERROR_HAS_NO_EPHEMERAL"
+              glib:nick="has-no-ephemeral"
+              glib:name="HasNoEphemeral">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="568">Message was send to a topic without the EPHEMERAL flag.</doc>
+      </member>
+      <member name="publish"
+              value="8"
+              c:identifier="P2PANDA_ERROR_PUBLISH"
+              glib:nick="publish"
+              glib:name="Publish">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="575">Failed to publish a message.</doc>
+      </member>
+      <member name="signature"
+              value="9"
+              c:identifier="P2PANDA_ERROR_SIGNATURE"
+              glib:nick="signature"
+              glib:name="Signature">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="582">Invalid sigature, when parsing [struct@NodeId] or [struct@PrivateKey].</doc>
+      </member>
+      <function name="quark" c:identifier="p2panda_error_quark">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="591">Error quark for [error@Error]</doc>
+        <return-value transfer-ownership="none">
+          <doc xml:space="preserve"
+               filename="libp2panda/include/p2panda.h"
+               line="596">The error domain</doc>
+          <type name="GLib.Quark" c:type="GQuark"/>
+        </return-value>
+      </function>
+    </enumeration>
+    <record name="Hash"
+            c:type="P2pandaHash"
+            opaque="1"
+            glib:type-name="P2pandaHash"
+            glib:get-type="p2panda_hash_get_type"
+            c:symbol-prefix="hash">
+      <source-position filename="libp2panda/include/p2panda.h" line="349"/>
+      <method name="copy" c:identifier="p2panda_hash_copy">
+        <source-position filename="libp2panda/include/p2panda.h" line="353"/>
+        <return-value transfer-ownership="full">
+          <type name="Hash" c:type="P2pandaHash*"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="hash" transfer-ownership="none">
+            <type name="Hash" c:type="P2pandaHash*"/>
+          </instance-parameter>
+        </parameters>
+      </method>
+      <method name="free" c:identifier="p2panda_hash_free">
+        <source-position filename="libp2panda/include/p2panda.h" line="354"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="hash" transfer-ownership="none">
+            <type name="Hash" c:type="P2pandaHash*"/>
+          </instance-parameter>
+        </parameters>
+      </method>
+    </record>
+    <enumeration name="MdnsDiscoveryMode"
+                 glib:type-name="P2pandaMdnsDiscoveryMode"
+                 glib:get-type="p2panda_mdns_discovery_mode_get_type"
+                 c:type="P2pandaMdnsDiscoveryMode">
+      <member name="active"
+              value="0"
+              c:identifier="P2PANDA_MDNS_DISCOVERY_MODE_ACTIVE"
+              glib:nick="active"
+              glib:name="Active">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="147">Broadcast this node and look for other nodes via MDNS</doc>
+      </member>
+      <member name="passive"
+              value="1"
+              c:identifier="P2PANDA_MDNS_DISCOVERY_MODE_PASSIVE"
+              glib:nick="passive"
+              glib:name="Passive">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="148">Look for other nodes vie MDNS but do not broadcast this node</doc>
+      </member>
+    </enumeration>
+    <record name="NetworkId"
+            c:type="P2pandaNetworkId"
+            opaque="1"
+            glib:type-name="P2pandaNetworkId"
+            glib:get-type="p2panda_network_id_get_type"
+            c:symbol-prefix="network_id">
+      <source-position filename="libp2panda/include/p2panda.h" line="159"/>
+      <constructor name="new" c:identifier="p2panda_network_id_new">
+        <source-position filename="libp2panda/include/p2panda.h" line="168"/>
+        <return-value transfer-ownership="full">
+          <type name="NetworkId" c:type="P2pandaNetworkId*"/>
+        </return-value>
+      </constructor>
+      <constructor name="new_from_data"
+                   c:identifier="p2panda_network_id_new_from_data">
+        <source-position filename="libp2panda/include/p2panda.h" line="181"/>
+        <return-value transfer-ownership="full">
+          <doc xml:space="preserve"
+               filename="libp2panda/include/p2panda.h"
+               line="179">a new [struct@NetworkId]</doc>
+          <type name="NetworkId" c:type="P2pandaNetworkId*"/>
+        </return-value>
+        <parameters>
+          <parameter name="data" transfer-ownership="none">
+            <array zero-terminated="0" c:type="const uint8_t*" fixed-size="32">
+              <type name="guint8" c:type="uint8_t"/>
+            </array>
+          </parameter>
+        </parameters>
+      </constructor>
+      <method name="copy" c:identifier="p2panda_network_id_copy">
+        <source-position filename="libp2panda/include/p2panda.h" line="170"/>
+        <return-value transfer-ownership="full">
+          <type name="NetworkId" c:type="P2pandaNetworkId*"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="network_id" transfer-ownership="none">
+            <type name="NetworkId" c:type="P2pandaNetworkId*"/>
+          </instance-parameter>
+        </parameters>
+      </method>
+      <method name="free" c:identifier="p2panda_network_id_free">
+        <source-position filename="libp2panda/include/p2panda.h" line="171"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="network_id" transfer-ownership="none">
+            <type name="NetworkId" c:type="P2pandaNetworkId*"/>
+          </instance-parameter>
+        </parameters>
+      </method>
+      <method name="get_data" c:identifier="p2panda_network_id_get_data">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="183">Retrieves the raw bytes of the [struct@NetworkId]</doc>
+        <source-position filename="libp2panda/include/p2panda.h" line="191"/>
+        <return-value transfer-ownership="none">
+          <array zero-terminated="0" c:type="const uint8_t*" fixed-size="32">
+            <type name="guint8" c:type="uint8_t"/>
+          </array>
+        </return-value>
+        <parameters>
+          <instance-parameter name="network_id" transfer-ownership="none">
+            <type name="NetworkId" c:type="P2pandaNetworkId*"/>
+          </instance-parameter>
+        </parameters>
+      </method>
+    </record>
+    <class name="Node"
+           c:symbol-prefix="node"
+           c:type="P2pandaNode"
+           parent="GObject.Object"
+           glib:type-name="P2pandaNode"
+           glib:get-type="p2panda_node_get_type"
+           glib:type-struct="NodeClass">
+      <doc xml:space="preserve"
+           filename="libp2panda/include/p2panda.h"
+           line="128">[class@Node] main entry point.</doc>
+      <source-position filename="libp2panda/include/p2panda.h" line="135"/>
+      <constructor name="new" c:identifier="p2panda_node_new">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="371">Creates a new node with the given options.</doc>
+        <source-position filename="libp2panda/include/p2panda.h" line="384"/>
+        <return-value transfer-ownership="full">
+          <doc xml:space="preserve"
+               filename="libp2panda/include/p2panda.h"
+               line="382">a new [class@Node]</doc>
+          <type name="Node" c:type="P2pandaNode*"/>
+        </return-value>
+        <parameters>
+          <parameter name="private_key"
+                     transfer-ownership="none"
+                     nullable="1"
+                     allow-none="1">
+            <doc xml:space="preserve"
+                 filename="libp2panda/include/p2panda.h"
+                 line="373">The private key to be used for this node</doc>
+            <type name="PrivateKey" c:type="const P2pandaPrivateKey*"/>
+          </parameter>
+          <parameter name="database_url"
+                     transfer-ownership="none"
+                     nullable="1"
+                     allow-none="1">
+            <doc xml:space="preserve"
+                 filename="libp2panda/include/p2panda.h"
+                 line="374">A sqlite address</doc>
+            <type name="utf8" c:type="const char*"/>
+          </parameter>
+          <parameter name="network_id"
+                     transfer-ownership="none"
+                     nullable="1"
+                     allow-none="1">
+            <doc xml:space="preserve"
+                 filename="libp2panda/include/p2panda.h"
+                 line="375">The network id of the network to join</doc>
+            <type name="NetworkId" c:type="const P2pandaNetworkId*"/>
+          </parameter>
+          <parameter name="relay_url"
+                     transfer-ownership="none"
+                     nullable="1"
+                     allow-none="1">
+            <doc xml:space="preserve"
+                 filename="libp2panda/include/p2panda.h"
+                 line="376">The url of a iroh Relay Server</doc>
+            <type name="GLib.Uri" c:type="GUri*"/>
+          </parameter>
+          <parameter name="bootstrap_node_id"
+                     transfer-ownership="none"
+                     nullable="1"
+                     allow-none="1">
+            <doc xml:space="preserve"
+                 filename="libp2panda/include/p2panda.h"
+                 line="377">The address of the bootstrap node</doc>
+            <type name="NodeId" c:type="const P2pandaNodeId*"/>
+          </parameter>
+          <parameter name="mdns_mode" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="libp2panda/include/p2panda.h"
+                 line="378">The MDNS decovery mode</doc>
+            <type name="MdnsDiscoveryMode" c:type="P2pandaMdnsDiscoveryMode"/>
+          </parameter>
+        </parameters>
+      </constructor>
+      <method name="spawn_async"
+              c:identifier="p2panda_node_spawn_async"
+              glib:finish-func="spawn_finish">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="391">Spawn the node.
+
+Before spawning the node no network communcation takes place, and the [class@Node]
+can't be used.</doc>
+        <source-position filename="libp2panda/include/p2panda.h" line="404"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="node" transfer-ownership="none">
+            <type name="Node" c:type="P2pandaNode*"/>
+          </instance-parameter>
+          <parameter name="cancellable"
+                     transfer-ownership="none"
+                     nullable="1"
+                     allow-none="1">
+            <type name="Gio.Cancellable" c:type="GCancellable*"/>
+          </parameter>
+          <parameter name="callback"
+                     transfer-ownership="none"
+                     nullable="1"
+                     allow-none="1"
+                     scope="async"
+                     closure="2">
+            <type name="Gio.AsyncReadyCallback" c:type="GAsyncReadyCallback"/>
+          </parameter>
+          <parameter name="user_data"
+                     transfer-ownership="none"
+                     nullable="1"
+                     allow-none="1">
+            <doc xml:space="preserve"
+                 filename="libp2panda/include/p2panda.h"
+                 line="396">user data to pass to @callback</doc>
+            <type name="gpointer" c:type="gpointer"/>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="spawn_finish"
+              c:identifier="p2panda_node_spawn_finish"
+              throws="1">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="409">Finishes the [method@Node.spawn_async] call.</doc>
+        <source-position filename="libp2panda/include/p2panda.h" line="419"/>
+        <return-value transfer-ownership="none">
+          <type name="gboolean" c:type="gboolean"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="node" transfer-ownership="none">
+            <type name="Node" c:type="P2pandaNode*"/>
+          </instance-parameter>
+          <parameter name="result" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="libp2panda/include/p2panda.h"
+                 line="412">A [iface@Gio.AsyncResult]</doc>
+            <type name="Gio.AsyncResult" c:type="GAsyncResult*"/>
+          </parameter>
+        </parameters>
+      </method>
+      <property name="bootstrap"
+                readable="0"
+                writable="1"
+                construct-only="1"
+                transfer-ownership="none">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="9">A node that is used to find other nodes.</doc>
+        <type name="NodeId"/>
+      </property>
+      <property name="database-url"
+                readable="0"
+                writable="1"
+                construct-only="1"
+                transfer-ownership="none"
+                default-value="NULL">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="15">The [uri](https://www.sqlite.org/uri.html) to a sqlite database.</doc>
+        <type name="utf8" c:type="gchar*"/>
+      </property>
+      <property name="mdns-mode"
+                readable="0"
+                writable="1"
+                construct-only="1"
+                transfer-ownership="none"
+                default-value="Active">
+        <type name="MdnsDiscoveryMode"/>
+      </property>
+      <property name="network-id"
+                readable="0"
+                writable="1"
+                construct-only="1"
+                transfer-ownership="none">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="21">The id of the network to this node will join.</doc>
+        <type name="NetworkId"/>
+      </property>
+      <property name="private-key"
+                readable="0"
+                writable="1"
+                construct-only="1"
+                transfer-ownership="none">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="27">The private key representing the node's identity.</doc>
+        <type name="PrivateKey"/>
+      </property>
+      <property name="relay-url"
+                readable="0"
+                writable="1"
+                construct-only="1"
+                transfer-ownership="none">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="33">The url to a [iroh relay](https://docs.iroh.computer/concepts/relays).</doc>
+        <type name="GLib.Uri"/>
+      </property>
+      <glib:signal name="system-event" when="last">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="39">Emitted on system events.
+
+This signal is emitted on the main context that was thread default when the node was spawned.</doc>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+      </glib:signal>
+    </class>
+    <record name="NodeClass"
+            c:type="P2pandaNodeClass"
+            glib:is-gtype-struct-for="Node">
+      <source-position filename="libp2panda/include/p2panda.h" line="135"/>
+      <field name="parent_class">
+        <type name="GObject.ObjectClass" c:type="GObjectClass"/>
+      </field>
+    </record>
+    <record name="NodeId"
+            c:type="P2pandaNodeId"
+            opaque="1"
+            glib:type-name="P2pandaNodeId"
+            glib:get-type="p2panda_node_id_get_type"
+            c:symbol-prefix="node_id">
+      <source-position filename="libp2panda/include/p2panda.h" line="193"/>
+      <constructor name="new_from_data"
+                   c:identifier="p2panda_node_id_new_from_data"
+                   throws="1">
+        <source-position filename="libp2panda/include/p2panda.h" line="210"/>
+        <return-value transfer-ownership="full" nullable="1">
+          <doc xml:space="preserve"
+               filename="libp2panda/include/p2panda.h"
+               line="208">a new [struct@NodeId]</doc>
+          <type name="NodeId" c:type="P2pandaNodeId*"/>
+        </return-value>
+        <parameters>
+          <parameter name="data" transfer-ownership="none">
+            <array zero-terminated="0" c:type="const uint8_t*" fixed-size="32">
+              <type name="guint8" c:type="uint8_t"/>
+            </array>
+          </parameter>
+          <parameter name="relay_url"
+                     transfer-ownership="none"
+                     nullable="1"
+                     allow-none="1">
+            <doc xml:space="preserve"
+                 filename="libp2panda/include/p2panda.h"
+                 line="205">The url of a iroh Relay Server</doc>
+            <type name="GLib.Uri" c:type="GUri*"/>
+          </parameter>
+        </parameters>
+      </constructor>
+      <method name="copy" c:identifier="p2panda_node_id_copy">
+        <source-position filename="libp2panda/include/p2panda.h" line="197"/>
+        <return-value transfer-ownership="full">
+          <type name="NodeId" c:type="P2pandaNodeId*"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="node_id" transfer-ownership="none">
+            <type name="NodeId" c:type="P2pandaNodeId*"/>
+          </instance-parameter>
+        </parameters>
+      </method>
+      <method name="free" c:identifier="p2panda_node_id_free">
+        <source-position filename="libp2panda/include/p2panda.h" line="198"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="node_id" transfer-ownership="none">
+            <type name="NodeId" c:type="P2pandaNodeId*"/>
+          </instance-parameter>
+        </parameters>
+      </method>
+      <method name="get_data" c:identifier="p2panda_node_id_get_data">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="214">Retrieves the raw bytes of the [struct@NodeId]</doc>
+        <source-position filename="libp2panda/include/p2panda.h" line="222"/>
+        <return-value transfer-ownership="none">
+          <array zero-terminated="0" c:type="const uint8_t*" fixed-size="32">
+            <type name="guint8" c:type="uint8_t"/>
+          </array>
+        </return-value>
+        <parameters>
+          <instance-parameter name="node_id" transfer-ownership="none">
+            <type name="NodeId" c:type="P2pandaNodeId*"/>
+          </instance-parameter>
+        </parameters>
+      </method>
+    </record>
+    <record name="PrivateKey"
+            c:type="P2pandaPrivateKey"
+            opaque="1"
+            glib:type-name="P2pandaPrivateKey"
+            glib:get-type="p2panda_private_key_get_type"
+            c:symbol-prefix="private_key">
+      <source-position filename="libp2panda/include/p2panda.h" line="276"/>
+      <constructor name="new" c:identifier="p2panda_private_key_new">
+        <source-position filename="libp2panda/include/p2panda.h" line="290"/>
+        <return-value transfer-ownership="full">
+          <type name="PrivateKey" c:type="P2pandaPrivateKey*"/>
+        </return-value>
+      </constructor>
+      <constructor name="new_from_data"
+                   c:identifier="p2panda_private_key_new_from_data">
+        <source-position filename="libp2panda/include/p2panda.h" line="298"/>
+        <return-value transfer-ownership="full">
+          <type name="PrivateKey" c:type="P2pandaPrivateKey*"/>
+        </return-value>
+        <parameters>
+          <parameter name="data" transfer-ownership="none">
+            <array zero-terminated="0" c:type="const uint8_t*" fixed-size="32">
+              <type name="guint8" c:type="uint8_t"/>
+            </array>
+          </parameter>
+        </parameters>
+      </constructor>
+      <method name="copy" c:identifier="p2panda_private_key_copy">
+        <source-position filename="libp2panda/include/p2panda.h" line="280"/>
+        <return-value transfer-ownership="full">
+          <type name="PrivateKey" c:type="P2pandaPrivateKey*"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="private_key" transfer-ownership="none">
+            <type name="PrivateKey" c:type="P2pandaPrivateKey*"/>
+          </instance-parameter>
+        </parameters>
+      </method>
+      <method name="free" c:identifier="p2panda_private_key_free">
+        <source-position filename="libp2panda/include/p2panda.h" line="281"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="private_key" transfer-ownership="none">
+            <type name="PrivateKey" c:type="P2pandaPrivateKey*"/>
+          </instance-parameter>
+        </parameters>
+      </method>
+      <method name="get_data" c:identifier="p2panda_private_key_get_data">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="300">Retrieves the raw bytes of the [struct@PrivateKey]</doc>
+        <source-position filename="libp2panda/include/p2panda.h" line="308"/>
+        <return-value transfer-ownership="none">
+          <array zero-terminated="0" c:type="const uint8_t*" fixed-size="32">
+            <type name="guint8" c:type="uint8_t"/>
+          </array>
+        </return-value>
+        <parameters>
+          <instance-parameter name="private_key" transfer-ownership="none">
+            <type name="PrivateKey" c:type="P2pandaPrivateKey*"/>
+          </instance-parameter>
+        </parameters>
+      </method>
+      <method name="get_public_key"
+              c:identifier="p2panda_private_key_get_public_key">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="319">Retrieves the the [struct@PublicKey]</doc>
+        <source-position filename="libp2panda/include/p2panda.h" line="327"/>
+        <return-value transfer-ownership="full">
+          <type name="PublicKey" c:type="P2pandaPublicKey*"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="private_key" transfer-ownership="none">
+            <type name="PrivateKey" c:type="P2pandaPrivateKey*"/>
+          </instance-parameter>
+        </parameters>
+      </method>
+    </record>
+    <record name="PublicKey"
+            c:type="P2pandaPublicKey"
+            opaque="1"
+            glib:type-name="P2pandaPublicKey"
+            glib:get-type="p2panda_public_key_get_type"
+            c:symbol-prefix="public_key">
+      <source-position filename="libp2panda/include/p2panda.h" line="310"/>
+      <constructor name="new_from_data"
+                   c:identifier="p2panda_public_key_new_from_data"
+                   throws="1">
+        <source-position filename="libp2panda/include/p2panda.h" line="336"/>
+        <return-value transfer-ownership="full" nullable="1">
+          <doc xml:space="preserve"
+               filename="libp2panda/include/p2panda.h"
+               line="334">a new [struct@PublicKey]</doc>
+          <type name="PublicKey" c:type="P2pandaPublicKey*"/>
+        </return-value>
+        <parameters>
+          <parameter name="data" transfer-ownership="none">
+            <array zero-terminated="0" c:type="const uint8_t*" fixed-size="32">
+              <type name="guint8" c:type="uint8_t"/>
+            </array>
+          </parameter>
+        </parameters>
+      </constructor>
+      <method name="copy" c:identifier="p2panda_public_key_copy">
+        <source-position filename="libp2panda/include/p2panda.h" line="314"/>
+        <return-value transfer-ownership="full">
+          <type name="PublicKey" c:type="P2pandaPublicKey*"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="public_key" transfer-ownership="none">
+            <type name="PublicKey" c:type="P2pandaPublicKey*"/>
+          </instance-parameter>
+        </parameters>
+      </method>
+      <method name="free" c:identifier="p2panda_public_key_free">
+        <source-position filename="libp2panda/include/p2panda.h" line="315"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="public_key" transfer-ownership="none">
+            <type name="PublicKey" c:type="P2pandaPublicKey*"/>
+          </instance-parameter>
+        </parameters>
+      </method>
+      <method name="get_data" c:identifier="p2panda_public_key_get_data">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="339">Retrieves the raw bytes of the [struct@PublicKey]</doc>
+        <source-position filename="libp2panda/include/p2panda.h" line="347"/>
+        <return-value transfer-ownership="none">
+          <array zero-terminated="0" c:type="const uint8_t*" fixed-size="32">
+            <type name="guint8" c:type="uint8_t"/>
+          </array>
+        </return-value>
+        <parameters>
+          <instance-parameter name="public_key" transfer-ownership="none">
+            <type name="PublicKey" c:type="P2pandaPublicKey*"/>
+          </instance-parameter>
+        </parameters>
+      </method>
+    </record>
+    <class name="Topic"
+           c:symbol-prefix="topic"
+           c:type="P2pandaTopic"
+           parent="GObject.Object"
+           glib:type-name="P2pandaTopic"
+           glib:get-type="p2panda_topic_get_type"
+           glib:type-struct="TopicClass">
+      <doc xml:space="preserve"
+           filename="libp2panda/include/p2panda.h"
+           line="137">The subscription handle to a topic.</doc>
+      <source-position filename="libp2panda/include/p2panda.h" line="143"/>
+      <constructor name="new" c:identifier="p2panda_topic_new">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="425">Create a topic handle for the give [class@Node]</doc>
+        <source-position filename="libp2panda/include/p2panda.h" line="435"/>
+        <return-value transfer-ownership="full">
+          <doc xml:space="preserve"
+               filename="libp2panda/include/p2panda.h"
+               line="433">a new [class@Topic]</doc>
+          <type name="Topic" c:type="P2pandaTopic*"/>
+        </return-value>
+        <parameters>
+          <parameter name="node" transfer-ownership="none">
+            <type name="Node" c:type="P2pandaNode*"/>
+          </parameter>
+          <parameter name="topic_id"
+                     transfer-ownership="none"
+                     nullable="1"
+                     allow-none="1">
+            <type name="TopicId" c:type="const P2pandaTopicId*"/>
+          </parameter>
+          <parameter name="flags" transfer-ownership="none">
+            <type name="guint8" c:type="uint8_t"/>
+          </parameter>
+        </parameters>
+      </constructor>
+      <method name="publish_async"
+              c:identifier="p2panda_topic_publish_async"
+              glib:finish-func="publish_finish">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="471">Publish a message to a topic.</doc>
+        <source-position filename="libp2panda/include/p2panda.h" line="483"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="topic" transfer-ownership="none">
+            <type name="Topic" c:type="P2pandaTopic*"/>
+          </instance-parameter>
+          <parameter name="bytes" transfer-ownership="none">
+            <type name="GLib.Bytes" c:type="GBytes*"/>
+          </parameter>
+          <parameter name="ephemeral" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="libp2panda/include/p2panda.h"
+                 line="475">Whether this message should be ephemeral or persistent</doc>
+            <type name="gboolean" c:type="gboolean"/>
+          </parameter>
+          <parameter name="cancellable"
+                     transfer-ownership="none"
+                     nullable="1"
+                     allow-none="1">
+            <doc xml:space="preserve"
+                 filename="libp2panda/include/p2panda.h"
+                 line="476">
+@callback (nullable):</doc>
+            <type name="Gio.Cancellable" c:type="GCancellable*"/>
+          </parameter>
+          <parameter name="callback"
+                     transfer-ownership="none"
+                     nullable="1"
+                     allow-none="1"
+                     scope="async"
+                     closure="4">
+            <type name="Gio.AsyncReadyCallback" c:type="GAsyncReadyCallback"/>
+          </parameter>
+          <parameter name="user_data"
+                     transfer-ownership="none"
+                     nullable="1"
+                     allow-none="1">
+            <doc xml:space="preserve"
+                 filename="libp2panda/include/p2panda.h"
+                 line="478">user data to pass to @callback</doc>
+            <type name="gpointer" c:type="gpointer"/>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="publish_finish"
+              c:identifier="p2panda_topic_publish_finish"
+              throws="1">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="490">Finishes the [method@Topic.publish_async] call.</doc>
+        <source-position filename="libp2panda/include/p2panda.h" line="500"/>
+        <return-value transfer-ownership="none">
+          <type name="gboolean" c:type="gboolean"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="topic" transfer-ownership="none">
+            <type name="Topic" c:type="P2pandaTopic*"/>
+          </instance-parameter>
+          <parameter name="result" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="libp2panda/include/p2panda.h"
+                 line="493">A [iface@Gio.AsyncResult]</doc>
+            <type name="Gio.AsyncResult" c:type="GAsyncResult*"/>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="spawn_async"
+              c:identifier="p2panda_topic_spawn_async"
+              glib:finish-func="spawn_finish">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="439">Spawn the topic.
+
+Before spawning the topic no network communcation takes place, and the [class@Topic]
+won't be able to send nor receive messages.</doc>
+        <source-position filename="libp2panda/include/p2panda.h" line="452"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="topic" transfer-ownership="none">
+            <type name="Topic" c:type="P2pandaTopic*"/>
+          </instance-parameter>
+          <parameter name="cancellable"
+                     transfer-ownership="none"
+                     nullable="1"
+                     allow-none="1">
+            <type name="Gio.Cancellable" c:type="GCancellable*"/>
+          </parameter>
+          <parameter name="callback"
+                     transfer-ownership="none"
+                     nullable="1"
+                     allow-none="1"
+                     scope="async"
+                     closure="2">
+            <type name="Gio.AsyncReadyCallback" c:type="GAsyncReadyCallback"/>
+          </parameter>
+          <parameter name="user_data"
+                     transfer-ownership="none"
+                     nullable="1"
+                     allow-none="1">
+            <doc xml:space="preserve"
+                 filename="libp2panda/include/p2panda.h"
+                 line="444">user data to pass to @callback</doc>
+            <type name="gpointer" c:type="gpointer"/>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="spawn_finish"
+              c:identifier="p2panda_topic_spawn_finish"
+              throws="1">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="457">Finishes the [method@Topic.spawn_async] call.</doc>
+        <source-position filename="libp2panda/include/p2panda.h" line="467"/>
+        <return-value transfer-ownership="none">
+          <type name="gboolean" c:type="gboolean"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="topic" transfer-ownership="none">
+            <type name="Topic" c:type="P2pandaTopic*"/>
+          </instance-parameter>
+          <parameter name="result" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="libp2panda/include/p2panda.h"
+                 line="460">A [iface@Gio.AsyncResult]</doc>
+            <type name="Gio.AsyncResult" c:type="GAsyncResult*"/>
+          </parameter>
+        </parameters>
+      </method>
+      <property name="flags"
+                writable="1"
+                construct-only="1"
+                transfer-ownership="none"
+                default-value="None">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="54">Configuration for the [class@Topic].</doc>
+        <type name="TopicFlags"/>
+      </property>
+      <property name="node"
+                writable="1"
+                construct-only="1"
+                transfer-ownership="none">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="47">A spawned [class@Node].</doc>
+        <type name="Node"/>
+      </property>
+      <property name="topic-id"
+                writable="1"
+                construct-only="1"
+                transfer-ownership="none">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="61">The id of the topic this [class@Topic] will be subscribed to.</doc>
+        <type name="TopicId"/>
+      </property>
+      <glib:signal name="ephemeral-message" when="last">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="80">Emitted on incomming ephemeral message.
+
+This signal is emitted on the main context that was thread default when the topic was spawned.</doc>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <parameter name="public_key" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="libp2panda/include/p2panda.h"
+                 line="83">The public key of the origin node of the message</doc>
+            <type name="PublicKey"/>
+          </parameter>
+          <parameter name="datetime" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="libp2panda/include/p2panda.h"
+                 line="84">The timestamp</doc>
+            <type name="GLib.DateTime"/>
+          </parameter>
+          <parameter name="bytes" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="libp2panda/include/p2panda.h"
+                 line="85">The content of the message</doc>
+            <type name="GLib.Bytes"/>
+          </parameter>
+        </parameters>
+      </glib:signal>
+      <glib:signal name="error" when="last">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="118">Emitted when a topic finishes syncing.
+
+This signal is emitted on the main context that was thread default when the topic was spawned.</doc>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <parameter name="error" transfer-ownership="none">
+            <type name="GLib.Error"/>
+          </parameter>
+        </parameters>
+      </glib:signal>
+      <glib:signal name="message" when="last">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="68">Emitted on incomming persistent message.
+
+This signal is emitted on the main context that was thread default when the topic was spawned.</doc>
+        <return-value transfer-ownership="none">
+          <type name="gboolean" c:type="gboolean"/>
+        </return-value>
+        <parameters>
+          <parameter name="public_key" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="libp2panda/include/p2panda.h"
+                 line="71">The public key of the origin node of the message</doc>
+            <type name="PublicKey"/>
+          </parameter>
+          <parameter name="datetime" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="libp2panda/include/p2panda.h"
+                 line="72">The timestamp</doc>
+            <type name="GLib.DateTime"/>
+          </parameter>
+          <parameter name="bytes" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="libp2panda/include/p2panda.h"
+                 line="73">The message</doc>
+            <type name="GLib.Bytes"/>
+          </parameter>
+        </parameters>
+      </glib:signal>
+      <glib:signal name="sync-ended" when="last">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="107">Emitted when a topic finishes syncing.
+
+This signal is emitted on the main context that was thread default when the topic was spawned.</doc>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <parameter name="remote_node_id" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="libp2panda/include/p2panda.h"
+                 line="110">The public key for the remote node</doc>
+            <type name="NodeId"/>
+          </parameter>
+          <parameter name="session_id" transfer-ownership="none">
+            <type name="guint64" c:type="guint64"/>
+          </parameter>
+        </parameters>
+      </glib:signal>
+      <glib:signal name="sync-started" when="last">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="92">Emitted for errors.
+
+This signal is emitted on the main context that was thread default when the topic was spawned.</doc>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <parameter name="remote_node_id" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="libp2panda/include/p2panda.h"
+                 line="95">The public key for the remote node</doc>
+            <type name="NodeId"/>
+          </parameter>
+          <parameter name="session_id" transfer-ownership="none">
+            <type name="guint64" c:type="guint64"/>
+          </parameter>
+          <parameter name="incomming_operations" transfer-ownership="none">
+            <type name="guint64" c:type="guint64"/>
+          </parameter>
+          <parameter name="outgoing_operations" transfer-ownership="none">
+            <type name="guint64" c:type="guint64"/>
+          </parameter>
+          <parameter name="incoming_bytes" transfer-ownership="none">
+            <type name="guint64" c:type="guint64"/>
+          </parameter>
+          <parameter name="outgoing_bytes" transfer-ownership="none">
+            <type name="guint64" c:type="guint64"/>
+          </parameter>
+        </parameters>
+      </glib:signal>
+    </class>
+    <record name="TopicClass"
+            c:type="P2pandaTopicClass"
+            glib:is-gtype-struct-for="Topic">
+      <source-position filename="libp2panda/include/p2panda.h" line="143"/>
+      <field name="parent_class">
+        <type name="GObject.ObjectClass" c:type="GObjectClass"/>
+      </field>
+    </record>
+    <bitfield name="TopicFlags"
+              glib:type-name="P2pandaTopicFlags"
+              glib:get-type="p2panda_topic_flags_get_type"
+              c:type="P2pandaTopicFlags">
+      <member name="none"
+              value="0"
+              c:identifier="P2PANDA_TOPIC_NONE"
+              glib:nick="none"
+              glib:name="None">
+      </member>
+      <member name="persistent"
+              value="1"
+              c:identifier="P2PANDA_TOPIC_PERSISTENT"
+              glib:nick="persistent"
+              glib:name="Persistent">
+      </member>
+      <member name="ephemeral"
+              value="2"
+              c:identifier="P2PANDA_TOPIC_EPHEMERAL"
+              glib:nick="ephemeral"
+              glib:name="Ephemeral">
+      </member>
+      <member name="from_start"
+              value="4"
+              c:identifier="P2PANDA_TOPIC_FROM_START"
+              glib:nick="from-start"
+              glib:name="FromStart">
+      </member>
+    </bitfield>
+    <record name="TopicId"
+            c:type="P2pandaTopicId"
+            opaque="1"
+            glib:type-name="P2pandaTopicId"
+            glib:get-type="p2panda_topic_id_get_type"
+            c:symbol-prefix="topic_id">
+      <source-position filename="libp2panda/include/p2panda.h" line="242"/>
+      <constructor name="new" c:identifier="p2panda_topic_id_new">
+        <source-position filename="libp2panda/include/p2panda.h" line="251"/>
+        <return-value transfer-ownership="full">
+          <type name="TopicId" c:type="P2pandaTopicId*"/>
+        </return-value>
+      </constructor>
+      <constructor name="new_from_data"
+                   c:identifier="p2panda_topic_id_new_from_data">
+        <source-position filename="libp2panda/include/p2panda.h" line="264"/>
+        <return-value transfer-ownership="full">
+          <doc xml:space="preserve"
+               filename="libp2panda/include/p2panda.h"
+               line="262">a new [struct@TopicId]</doc>
+          <type name="TopicId" c:type="P2pandaTopicId*"/>
+        </return-value>
+        <parameters>
+          <parameter name="data" transfer-ownership="none">
+            <array zero-terminated="0" c:type="const uint8_t*" fixed-size="32">
+              <type name="guint8" c:type="uint8_t"/>
+            </array>
+          </parameter>
+        </parameters>
+      </constructor>
+      <method name="copy" c:identifier="p2panda_topic_id_copy">
+        <source-position filename="libp2panda/include/p2panda.h" line="253"/>
+        <return-value transfer-ownership="full">
+          <type name="TopicId" c:type="P2pandaTopicId*"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="topic_id" transfer-ownership="none">
+            <type name="TopicId" c:type="P2pandaTopicId*"/>
+          </instance-parameter>
+        </parameters>
+      </method>
+      <method name="free" c:identifier="p2panda_topic_id_free">
+        <source-position filename="libp2panda/include/p2panda.h" line="254"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="topic_id" transfer-ownership="none">
+            <type name="TopicId" c:type="P2pandaTopicId*"/>
+          </instance-parameter>
+        </parameters>
+      </method>
+      <method name="get_data" c:identifier="p2panda_topic_id_get_data">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="266">Retrieves the raw bytes of the [struct@TopicId]</doc>
+        <source-position filename="libp2panda/include/p2panda.h" line="274"/>
+        <return-value transfer-ownership="none">
+          <array zero-terminated="0" c:type="const uint8_t*" fixed-size="32">
+            <type name="guint8" c:type="uint8_t"/>
+          </array>
+        </return-value>
+        <parameters>
+          <instance-parameter name="topic_id" transfer-ownership="none">
+            <type name="TopicId" c:type="P2pandaTopicId*"/>
+          </instance-parameter>
+        </parameters>
+      </method>
+    </record>
+    <function name="error_quark"
+              c:identifier="p2panda_error_quark"
+              moved-to="Error.quark">
+      <doc xml:space="preserve"
+           filename="libp2panda/include/p2panda.h"
+           line="591">Error quark for [error@Error]</doc>
+      <return-value transfer-ownership="none">
+        <doc xml:space="preserve"
+             filename="libp2panda/include/p2panda.h"
+             line="596">The error domain</doc>
+        <type name="GLib.Quark" c:type="GQuark"/>
+      </return-value>
+    </function>
+  </namespace>
+</repository>
